@@ -26,7 +26,10 @@
   }
 
   g = new XDate(2011, 9, 7).beginningOfMonth();
-  console.log(g.toString() + " - " + g.getWeek(1) + " - " + g.getWeekYear(1));
+  console.log(g.toString() + " - KW" + g.getWeek(1) + " - " + g.getWeekYear(1));
+
+  g = new XDate(2011, 2, 7).nextQuarter().nextQuarter().nextQuarter().nextQuarter();
+  console.log(g.toString() + " - Q" + g.getQuarter(1) + " - " + g.getYear(1));
 </script>
 
 </body>

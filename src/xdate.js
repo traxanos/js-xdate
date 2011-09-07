@@ -80,6 +80,12 @@ XDate.prototype.changeMilliseconds = function(millisecond) {
   this.setMilliseconds(this.getMilliseconds() + millisecond);
   return this;
 };
+XDate.prototype.nextMillisecond = function() {
+  return this.changeMilliseconds(1);
+};
+XDate.prototype.previousMillisecond = function() {
+  return this.changeMilliseconds(-1);
+};
 
 // Seconds
 XDate.prototype.setSeconds = function(second) {
@@ -101,6 +107,12 @@ XDate.prototype.beginningOfSecond = function() {
 XDate.prototype.endOfSecond = function() {
   this.setMilliseconds(999);
   return this;
+};
+XDate.prototype.nextSecond = function() {
+  return this.changeSeconds(1);
+};
+XDate.prototype.previousSecond = function() {
+  return this.changeSeconds(-1);
 };
 
 // Minutes
@@ -124,6 +136,12 @@ XDate.prototype.endOfMinute = function() {
   this.date.setSeconds(59, 999);
   return this;
 };
+XDate.prototype.nextMinute = function() {
+  return this.changeMinutes(1);
+};
+XDate.prototype.previousMinute = function() {
+  return this.changeMinutes(-1);
+};
 
 // Hours
 XDate.prototype.setHours = function(hour) {
@@ -146,13 +164,18 @@ XDate.prototype.endOfHour = function() {
   this.date.setMinutes(59, 59, 999);
   return this;
 };
+XDate.prototype.nextHour = function() {
+  return this.changeHours(1);
+};
+XDate.prototype.previousHour = function() {
+  return this.changeHours(-1);
+};
 
 //  Day
 XDate.prototype.setDay = function(day) {
   this.date.setDate(day);
   return this;
 };
-
 XDate.prototype.getDay = function() {
   return this.date.getDate();
 };
@@ -161,7 +184,6 @@ XDate.prototype.changeDays = function(day) {
   this.setHours(this.getHours() + (day * 24));
   return this;
 };
-
 XDate.prototype.beginningOfDay = function() {
   this.date.setHours(0, 0, 0, 0);
   return this;
@@ -170,7 +192,6 @@ XDate.prototype.endOfDay = function() {
   this.date.setHours(23, 59, 59, 999);
   return this;
 };
-
 XDate.prototype.nextDay = function() {
   return this.changeDays(1);
 };
@@ -202,12 +223,24 @@ XDate.prototype.changeMonth = function(month) {
   this.setMonth(this.getMonth() + month);
   return this;
 };
-
 XDate.prototype.beginningOfMonth = function() {
   return this.beginningOfDay().setDay(1);
 };
 XDate.prototype.endOfMonth = function() {
   return this.beginningOfMonth().changeMonth(1).changeMilliseconds(-1);
+};
+XDate.prototype.nextMonth = function() {
+  return this.changeMonth(1);
+};
+XDate.prototype.previousMonth = function() {
+  return this.changeMonth(-1);
+};
+
+XDate.prototype.getMonthDays = function() {
+  if (this.getMonth() === 2 && this.isLeapYear()) {
+    return 29;
+  }
+  return XDate.DAYS_IN_MONTH[this.getMonth() - 1];
 };
 
 // Year
@@ -223,12 +256,17 @@ XDate.prototype.changeYears = function(year) {
   this.setYear(this.getYear() + year);
   return this;
 };
-
 XDate.prototype.beginningOfYear = function() {
   return this.beginningOfDay().setDay(1).setMonth(1);
 };
 XDate.prototype.endOfYear = function() {
   return this.beginningOfYear().changeYears(1).changeMilliseconds(-1);
+};
+XDate.prototype.nextYear = function() {
+  return this.changeYears(1);
+};
+XDate.prototype.previousYear = function() {
+  return this.changeYears(-1);
 };
 
 // Quarter
@@ -243,26 +281,23 @@ XDate.prototype.getQuarter = function() {
     return 4;
   }
 };
-
 XDate.prototype.beginningOfQuarter = function() {
   return this.setMonth(((this.getQuarter() - 1) * 3) + 1).beginningOfMonth();
 };
-
 XDate.prototype.endOfQuarter = function() {
   return this.setMonth(((this.getQuarter() - 1) * 3) + 3).endOfMonth();
+};
+XDate.prototype.nextQuarter = function() {
+  return this.changeMonth(3);
+};
+XDate.prototype.previousQuarter = function() {
+  return this.changeMonth(-3);
 };
 
 XDate.prototype.isLeapYear = function() {
   var year = this.getYear();
   return (year % 4 === 0) && (year % 100 !== 0) || (year % 400 === 0);
 };
-XDate.prototype.getMonthDays = function() {
-  if (this.getMonth() === 2 && this.isLeapYear()) {
-    return 29;
-  }
-  return XDate.DAYS_IN_MONTH[this.getMonth() - 1];
-};
-
 XDate.prototype.between = function(start, end) {
   return start.time() <= this.time() && this.time() <= end.time();
 };
