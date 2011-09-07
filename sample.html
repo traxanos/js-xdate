@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>JS XDate</title>
+  <script type="text/javascript" src="src/xdate.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  //
+  console.log(XDate.today().setYear(2010).setMonth(1).setDay(1).getWeek(1));
+  console.log(XDate.today().setYear(2010).setMonth(1).setDay(1).changeMilliseconds(-1).getWeek(1));
+  console.log(XDate.today().beginningOfYear().getWeek(1));
+  console.log(XDate.today().beginningOfYear().changeDays(-360).getWeek(1));
+  console.log(XDate.today().getWeek(1));
+  console.log(XDate.today().getWeek(1));
+
+  h = (new Date(2009, 11, 22)).toXDate();
+  for (var f = 1; f < 58; f++) {
+    var g = h.clone().changeDays(f);
+    console.log(g.toString() + " - " + g.getWeek(1) + " - " + g.nextWeek().endOfWeek(1));
+  }
+
+  h = (new Date(1983, 11, 22)).toXDate();
+  for (var f = 1; f < 9; f++) {
+    var g = h.clone().changeDays(f);
+    console.log(g.toString() + " - " + g.getWeekDay(1));
+  }
+
+  g = new XDate(2011, 9, 7).beginningOfMonth();
+  console.log(g.toString() + " - " + g.getWeek(1) + " - " + g.getWeekYear(1));
+</script>
+
+</body>
+</html>
